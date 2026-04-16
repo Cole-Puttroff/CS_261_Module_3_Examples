@@ -43,8 +43,22 @@ class Dynamic_Array:
     def append(self, val):
         # Will need to be amended to check if there is room
         # and call method to expand array when necessary
-        self._data[self._size] = val
-        self._size = self._size + 1
+        if self._size == self._capacity:
+            self.resize(self._capacity*2)
+        else:
+            self._data[self._size] = val
+            self._size = self._size + 1
+
+    def resize(self, new_capacity: int) -> None:
+        """
+        TODO: Write this implementation
+        """
+        new_array = StaticArray(new_capacity)
+
+        for k in range(0, self._size):
+            new_array[k] = self._data[k]
+
+        pass
 
     def get_at_index(self, index: int) -> object:
         if index < 0 or index >= self._size:

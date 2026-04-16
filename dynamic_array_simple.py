@@ -1,55 +1,48 @@
 from static_array import StaticArray
 
-
-class DynamicArrayException(Exception):
-    pass
-
-
-class Dynamic_Array_Iterator:
-    def __init__(self, dyn_array):
-        self._index = 0
-        self._dyn_array = dyn_array
-
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        if self._index >= self._dyn_array.length():
-            raise StopIteration
-        value = self._dyn_array.get_at_index(self._index)
-        self._index = self._index + 1
-        return value
-
-    def next(self):
-        return self.__next__()
-
-
 class Dynamic_Array:
     def __init__(self, start_array=None):
-        self._size = 0
-        self._capacity = 10
-        self._data = StaticArray(self._capacity)
+        self.size = 0
+        self.capacity = 10
+        self.data = StaticArray(self.capacity)
 
         if start_array is not None:
             for value in start_array:
                 self.append(value)
 
-    def __iter__(self):
-        return Dynamic_Array_Iterator(self)
-
     def __str__(self):
-        return str(self._data)
+        return str(self.data)
 
+    def __getitem__(self, index):
+        ...
+
+    # Will need to be amended to check if there is room and call function to expand array when necessary
     def append(self, val):
-        # Will need to be amended to check if there is room
-        # and call method to expand array when necessary
-        self._data[self._size] = val
-        self._size = self._size + 1
+        if self.size == self.capacity:
+            self.resize(2 * self.capacity)
+        else:
+            self.data[self.size] = val
+            self.size = self.size + 1
 
-    def get_at_index(self, index: int) -> object:
-        if index < 0 or index >= self._size:
-            raise DynamicArrayException
-        return self._data[index]
+    # Add a function that will create an expanded array with twice the size with the same elements
+    def resize(self, new_capacity: int) -> None:
+        """
+        TODO: Write this implementation
+        """
+        new_array = StaticArray(new_capacity)
 
-    def length(self) -> int:
-        return self._size
+        for k in range(0, self.size):
+            new_array[k] = self.data[k]
+
+
+if __name__ == "__main__":
+    # Create new instance of Dynamic_Array
+    my_list = Dynamic_Array()
+
+    # Build list with 10 items
+    for i in range(10):
+        my_list.append(i)
+
+    # Output list
+    for i in range(0, my_list.size):
+        print(my_list[i])
