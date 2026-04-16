@@ -27,22 +27,24 @@ class Dynamic_Array:
     def __str__(self):
         return str(self._data)
 
+    def __getitem__(self, index):
+        return self._data[index]
+
+
     def append(self, val):
-        # Will need to be amended to check if there is room
-        # and call method to expand array when necessary
         if self._size == self._capacity:
             self.resize(2 * self._capacity)
-        else:
-            self._data[self._size] = val
-            self._size = self._size + 1
+        # Removed the else — now the append always runs after resizing if needed
+        self._data[self._size] = val
+        self._size += 1
+
 
     def resize(self, new_capacity: int) -> None:
-        """
-        TODO: Write this implementation
-        """
         new_array = StaticArray(new_capacity)
 
-        for k in range(0, self._size):
+        for k in range(self._size):
             new_array[k] = self._data[k]
 
-        pass
+        self._data = new_array  # Point to the new array
+        self._capacity = new_capacity
+
