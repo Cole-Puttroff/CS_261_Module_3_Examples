@@ -1,3 +1,6 @@
+class StaticArrayException(Exception):
+    pass
+
 class StaticArray:
     def __init__(self, size=10):
         if size < 1:

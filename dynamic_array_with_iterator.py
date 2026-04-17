@@ -48,3 +48,19 @@ class Dynamic_Array:
         self._data = new_array  # Point to the new array
         self._capacity = new_capacity
 
+    def length(self) -> int:
+        return self._size
+
+
+my_list = Dynamic_Array()
+
+# Build list with 10 items
+for k in range(20):
+    my_list.append(k)
+
+my_list.__iter__()
+
+# Output list
+for k in range(0, my_list.length()):
+    print(my_list.__next__())
+
